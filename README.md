@@ -10,10 +10,12 @@
 
 ## 仓库内容
 
+**🌐 在线看板预览:** https://ziyi125229.github.io/gucheng-zhike/
+
 | 文件 | 说明 |
 |---|---|
 | `gucheng_demo.py` | 可运行 Demo:种草文案生成 + 私信意向识别,串成完整获客流程 |
-| `dashboard_sample.html` | AI 转化看板(漏斗式),可直接双击打开 |
+| `index.html` | AI 转化看板(漏斗式),可直接双击打开或访问上方在线预览 |
 
 ## 快速开始
 
