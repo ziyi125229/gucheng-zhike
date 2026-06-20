@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# 生成的看板输出(dashboard_sample.html 已示例,其余忽略)
+dashboard.html
+out.html
+
+# OS / 编辑器
+.DS_Store
+.idea/
+.vscode/

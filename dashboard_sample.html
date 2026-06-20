@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>古城直客 · AI 内容转化看板</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 py-8">
+  <div class="p-6 bg-white rounded-xl shadow-md max-w-4xl mx-auto">
+    <div class="flex justify-between items-center border-b pb-4">
+      <h2 class="text-xl font-bold text-slate-800">古城直客 · AI 内容转化看板 (Beta)</h2>
+      <span class="px-3 py-1 text-sm bg-green-100 text-green-700 rounded-full">香格里拉·某设计师民宿</span>
+    </div>
+
+    <!-- 一句话结论 -->
+    <p class="mt-4 text-sm text-slate-600">
+      本周一条 AI 自有内容链路:<b class="text-slate-900">48,200 次曝光 → 12 单真实直客 → ¥480 分成</b>,
+      全程可逆向归因到具体笔记。
+    </p>
+
+    <!-- 转化漏斗 -->
+    <div class="flex items-stretch gap-1 my-6">
+      <div class="flex-1 p-4 bg-indigo-50 rounded-lg text-center">
+        <p class="text-gray-500 text-xs">AI 笔记曝光</p>
+        <p class="text-2xl font-bold text-indigo-600">48,200</p>
+      </div>
+      <div class="flex flex-col justify-center items-center px-1 text-center">
+        <span class="text-slate-400 text-lg leading-none">→</span>
+        <span class="text-[10px] text-slate-400">0.29%</span>
+      </div>
+      <div class="flex-1 p-4 bg-blue-50 rounded-lg text-center">
+        <p class="text-gray-500 text-xs">高意向私信</p>
+        <p class="text-2xl font-bold text-blue-600">142 组</p>
+      </div>
+      <div class="flex flex-col justify-center items-center px-1 text-center">
+        <span class="text-slate-400 text-lg leading-none">→</span>
+        <span class="text-[10px] text-slate-400">8.5%</span>
+      </div>
+      <div class="flex-1 p-4 bg-amber-50 rounded-lg text-center">
+        <p class="text-gray-500 text-xs">直客成交</p>
+        <p class="text-2xl font-bold text-amber-600">12 单</p>
+      </div>
+      <div class="flex flex-col justify-center items-center px-1 text-center">
+        <span class="text-emerald-400 text-lg leading-none">→</span>
+        <span class="text-[10px] text-slate-400">¥40/单</span>
+      </div>
+      <div class="flex-1 p-4 bg-emerald-600 rounded-lg text-center shadow">
+        <p class="text-emerald-100 text-xs">本周分成</p>
+        <p class="text-2xl font-bold text-white">¥480</p>
+      </div>
+    </div>
+
+    <!-- 证据区(次要) -->
+    <div class="grid md:grid-cols-2 gap-5 mt-6 border-t pt-5">
+      <div>
+        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">证据① AI 自有账号种草笔记</h3>
+        <div class="text-sm text-slate-700 bg-amber-50 rounded-lg p-4 leading-relaxed">🏔️ 在香格里拉,我终于睡进了一间「推开窗就是日照金山」的房间...<br><br>独克宗古城龟山公园旁,步行3分钟到大佛寺。藏式夯土墙改造的5间房,落地窗正对雪山,清晨被金山叫醒真的会失语 😭。<br>公区有壁炉和本地咖啡,冷天窝着烤火超治愈;还能帮约本地包车向导、体验酥油茶。<br><br>想了解房型/行程的姐妹,评论或私信我都可以哈~ 📍</div>
+      </div>
+      <div>
+        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">证据② 私信意向识别 · 合规留资</h3>
+        <div class="space-y-3">
+      <div class="border border-slate-100 rounded-lg p-4">
+        <div class="flex justify-between items-center mb-2">
+          <p class="text-sm text-slate-600">👤 请问下周末还有看雪山的房间吗?大概多少钱一晚</p>
+          <span class="px-2 py-0.5 text-xs bg-red-100 text-red-700 rounded-full">
+            high · 🔴 转人工</span>
+        </div>
+        <p class="text-sm text-slate-800 bg-slate-50 rounded p-3">💬 您好~下周末确实还有面向雪山的房型在售 🏔️ 方便留个微信或预订日期吗?我让管家给您同步实时房态和报价。</p>
+      </div>
+
+      <div class="border border-slate-100 rounded-lg p-4">
+        <div class="flex justify-between items-center mb-2">
+          <p class="text-sm text-slate-600">👤 你们家拍照好看吗</p>
+          <span class="px-2 py-0.5 text-xs bg-amber-100 text-amber-700 rounded-full">
+            medium · ⚪️ 自动回复</span>
+        </div>
+        <p class="text-sm text-slate-800 bg-slate-50 rounded p-3">💬 我们家落地窗正对日照金山,公区壁炉也很出片 📷 想看更多实拍可以私信我发您~</p>
+      </div>
+
+      <div class="border border-slate-100 rounded-lg p-4">
+        <div class="flex justify-between items-center mb-2">
+          <p class="text-sm text-slate-600">👤 随便逛逛</p>
+          <span class="px-2 py-0.5 text-xs bg-slate-100 text-slate-700 rounded-full">
+            low · ⚪️ 自动回复</span>
+        </div>
+        <p class="text-sm text-slate-800 bg-slate-50 rounded p-3">💬 欢迎随时来逛~ 有任何关于香格里拉住宿或玩法的问题都可以问我哈 😊</p>
+      </div></div>
+      </div>
+    </div>
+
+    <p class="text-xs text-gray-400 italic mt-6">★ 灵魂:别人只看赞藏,我们独占"哪条笔记真正带来直客成交"的转化归因数据壁垒。</p>
+  </div>
+</body>
+</html>
