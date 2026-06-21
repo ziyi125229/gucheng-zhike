@@ -126,18 +126,67 @@ def render_dashboard(note: str, dm_results: list[dict], messages: list[str]) -> 
 
     rows = []
     for msg, r in zip(messages, dm_results):
-        color = {"high": "red", "medium": "amber", "low": "slate"}[r["intent_level"]]
+        level = r["intent_level"]
         flag = "🔴 转人工" if r["need_human"] else "⚪️ 自动回复"
         rows.append(f"""
-      <div class="border border-slate-100 rounded-lg p-4">
-        <div class="flex justify-between items-center mb-2">
-          <p class="text-sm text-slate-600">👤 {html.escape(msg)}</p>
-          <span class="px-2 py-0.5 text-xs bg-{color}-100 text-{color}-700 rounded-full">
-            {r['intent_level']} · {flag}</span>
-        </div>
-        <p class="text-sm text-slate-800 bg-slate-50 rounded p-3">💬 {html.escape(r['reply'])}</p>
-      </div>""")
+        <div class="dm">
+          <div class="dm-head">
+            <span class="dm-q">👤 {html.escape(msg)}</span>
+            <span class="pill pill-{level}">{level} · {flag}</span>
+          </div>
+          <div class="reply">💬 {html.escape(r['reply'])}</div>
+        </div>""")
     dm_html = "\n".join(rows)
+
+    css = """
+* { box-sizing:border-box; }
+body { margin:0; padding:32px 16px; background:#f1f5f9;
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; color:#1e293b; }
+.card { max-width:880px; margin:0 auto; background:#fff; border-radius:14px;
+  box-shadow:0 4px 16px rgba(15,23,42,.08); padding:28px; }
+.head { display:flex; justify-content:space-between; align-items:center;
+  border-bottom:1px solid #e2e8f0; padding-bottom:16px; gap:12px; flex-wrap:wrap; }
+.head h2 { font-size:20px; font-weight:700; margin:0; color:#0f172a; }
+.tag-merchant { background:#dcfce7; color:#15803d; font-size:13px; padding:4px 12px; border-radius:999px; }
+.tag-demo { background:#fef3c7; color:#b45309; font-size:12px; padding:4px 10px; border-radius:999px; margin-left:6px; }
+.concl { font-size:14px; color:#475569; margin:16px 0 4px; }
+.concl b { color:#0f172a; }
+.funnel { display:flex; align-items:stretch; gap:4px; margin:20px 0 0; }
+.stage { flex:1; padding:14px 8px; border-radius:10px; text-align:center; }
+.stage .lbl { display:block; font-size:12px; color:#64748b; }
+.stage .num { display:block; font-size:23px; font-weight:700; margin-top:2px; }
+.s-blue { background:#eff6ff; } .s-blue .num { color:#2563eb; }
+.s-indigo { background:#eef2ff; } .s-indigo .num { color:#4f46e5; }
+.s-amber { background:#fffbeb; } .s-amber .num { color:#d97706; }
+.climax { background:#059669; box-shadow:0 2px 8px rgba(5,150,105,.3); }
+.climax .lbl { color:#d1fae5; } .climax .num { color:#fff; }
+.arrow { display:flex; flex-direction:column; justify-content:center; align-items:center; padding:0 2px; }
+.arrow span { color:#94a3b8; font-size:18px; line-height:1; }
+.arrow small { color:#94a3b8; font-size:10px; }
+.attr { margin-top:12px; background:#f8fafc; border:1px dashed #cbd5e1; border-radius:8px;
+  padding:10px 14px; font-size:13px; color:#475569; }
+.attr b { color:#0f172a; }
+.evidence { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:22px;
+  border-top:1px solid #e2e8f0; padding-top:20px; }
+.ev-h { font-size:11px; font-weight:600; color:#64748b; letter-spacing:.05em;
+  text-transform:uppercase; margin:0 0 8px; }
+.note { font-size:14px; color:#334155; background:#fffbeb; border-radius:10px; padding:16px; line-height:1.7; }
+.dm-list { display:flex; flex-direction:column; gap:12px; }
+.dm { border:1px solid #eef2f7; border-radius:10px; padding:14px; }
+.dm-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px; }
+.dm-q { font-size:13px; color:#475569; }
+.pill { font-size:11px; padding:2px 8px; border-radius:999px; white-space:nowrap; }
+.pill-high { background:#fee2e2; color:#b91c1c; }
+.pill-medium { background:#fef3c7; color:#b45309; }
+.pill-low { background:#f1f5f9; color:#475569; }
+.reply { font-size:13px; color:#1e293b; background:#f8fafc; border-radius:8px; padding:12px; }
+.soul { font-size:12px; color:#94a3b8; font-style:italic; margin-top:22px; }
+@media (max-width:680px) {
+  .funnel { flex-direction:column; }
+  .arrow span { display:inline-block; transform:rotate(90deg); }
+  .evidence { grid-template-columns:1fr; }
+}
+"""
 
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -145,66 +194,44 @@ def render_dashboard(note: str, dm_results: list[dict], messages: list[str]) -> 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>古城直客 · AI 内容转化看板</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <style>{css}</style>
 </head>
-<body class="bg-slate-100 py-8">
-  <div class="p-6 bg-white rounded-xl shadow-md max-w-4xl mx-auto">
-    <div class="flex justify-between items-center border-b pb-4">
-      <h2 class="text-xl font-bold text-slate-800">古城直客 · AI 内容转化看板 (Beta)</h2>
-      <span class="px-3 py-1 text-sm bg-green-100 text-green-700 rounded-full">香格里拉·某设计师民宿</span>
-    </div>
-
-    <!-- 一句话结论 -->
-    <p class="mt-4 text-sm text-slate-600">
-      本周一条 AI 自有内容链路:<b class="text-slate-900">48,200 次曝光 → 12 单真实直客 → ¥480 分成</b>,
-      全程可逆向归因到具体笔记。
-    </p>
-
-    <!-- 转化漏斗 -->
-    <div class="flex items-stretch gap-1 my-6">
-      <div class="flex-1 p-4 bg-indigo-50 rounded-lg text-center">
-        <p class="text-gray-500 text-xs">AI 笔记曝光</p>
-        <p class="text-2xl font-bold text-indigo-600">48,200</p>
-      </div>
-      <div class="flex flex-col justify-center items-center px-1 text-center">
-        <span class="text-slate-400 text-lg leading-none">→</span>
-        <span class="text-[10px] text-slate-400">0.29%</span>
-      </div>
-      <div class="flex-1 p-4 bg-blue-50 rounded-lg text-center">
-        <p class="text-gray-500 text-xs">高意向私信</p>
-        <p class="text-2xl font-bold text-blue-600">142 组</p>
-      </div>
-      <div class="flex flex-col justify-center items-center px-1 text-center">
-        <span class="text-slate-400 text-lg leading-none">→</span>
-        <span class="text-[10px] text-slate-400">8.5%</span>
-      </div>
-      <div class="flex-1 p-4 bg-amber-50 rounded-lg text-center">
-        <p class="text-gray-500 text-xs">直客成交</p>
-        <p class="text-2xl font-bold text-amber-600">12 单</p>
-      </div>
-      <div class="flex flex-col justify-center items-center px-1 text-center">
-        <span class="text-emerald-400 text-lg leading-none">→</span>
-        <span class="text-[10px] text-slate-400">¥40/单</span>
-      </div>
-      <div class="flex-1 p-4 bg-emerald-600 rounded-lg text-center shadow">
-        <p class="text-emerald-100 text-xs">本周分成</p>
-        <p class="text-2xl font-bold text-white">¥480</p>
-      </div>
-    </div>
-
-    <!-- 证据区(次要) -->
-    <div class="grid md:grid-cols-2 gap-5 mt-6 border-t pt-5">
+<body>
+  <div class="card">
+    <div class="head">
+      <h2>古城直客 · AI 内容转化看板 (Beta)</h2>
       <div>
-        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">证据① AI 自有账号种草笔记</h3>
-        <div class="text-sm text-slate-700 bg-amber-50 rounded-lg p-4 leading-relaxed">{note_html}</div>
+        <span class="tag-merchant">香格里拉·某设计师民宿</span>
+        <span class="tag-demo">样板演示数据</span>
+      </div>
+    </div>
+
+    <p class="concl">本周 <b>47,832 次曝光</b> 沉淀 2,140 次互动 → <b>11 单真实直客</b> → <b>¥472 分成</b>,每单可逆向归因到具体笔记。</p>
+
+    <div class="funnel">
+      <div class="stage s-blue"><span class="lbl">内容互动</span><span class="num">2,140</span></div>
+      <div class="arrow"><span>→</span><small>6.4%</small></div>
+      <div class="stage s-indigo"><span class="lbl">高意向私信</span><span class="num">138</span></div>
+      <div class="arrow"><span>→</span><small>8.0%</small></div>
+      <div class="stage s-amber"><span class="lbl">直客成交</span><span class="num">11 单</span></div>
+      <div class="arrow"><span>→</span><small>¥43/单</small></div>
+      <div class="stage climax"><span class="lbl">本周分成</span><span class="num">¥472</span></div>
+    </div>
+
+    <div class="attr">📌 成交归因 · TOP 笔记:<b>#3「日照金山」</b> 5 单 · <b>#7「包车向导」</b> 4 单 · <b>#1「壁炉咖啡」</b> 2 单 —— 单条内容的成交贡献可追溯</div>
+
+    <div class="evidence">
+      <div>
+        <h3 class="ev-h">证据① AI 自有账号种草笔记</h3>
+        <div class="note">{note_html}</div>
       </div>
       <div>
-        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">证据② 私信意向识别 · 合规留资</h3>
-        <div class="space-y-3">{dm_html}</div>
+        <h3 class="ev-h">证据② 私信意向识别 · 合规留资</h3>
+        <div class="dm-list">{dm_html}</div>
       </div>
     </div>
 
-    <p class="text-xs text-gray-400 italic mt-6">★ 灵魂:别人只看赞藏,我们独占"哪条笔记真正带来直客成交"的转化归因数据壁垒。</p>
+    <p class="soul">★ 灵魂:别人只看赞藏,我们独占"哪条笔记真正带来成交"的转化归因数据壁垒——见上方成交归因。</p>
   </div>
 </body>
 </html>"""
