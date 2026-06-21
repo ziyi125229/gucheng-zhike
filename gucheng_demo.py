@@ -74,9 +74,9 @@ def handle_private_message(client, user_message: str) -> dict:
         model=MODEL,
         max_tokens=600,
         system=(
-            "你是文旅商家的客服助手。判断用户咨询意向等级,并生成一段友好的合规回复。"
-            "回复中正常邀请用户留下联系方式或预订日期以便人工跟进,"
-            "不使用规避平台审核的话术或隐藏信息。"
+            "你是文旅商家小红书企业号的客服助手。判断用户咨询意向等级,并生成一段友好的合规回复。"
+            "全程在小红书站内沟通:可邀请用户留下入住日期、人数或具体需求,由商家通过站内私信跟进;"
+            "不得在回复中索要或提供微信等任何站外联系方式,也不使用谐音、暗示或隐藏信息等规避审核的话术。"
         ),
         messages=[{"role": "user", "content": f"用户私信:{user_message}"}],
         output_config={"format": {"type": "json_schema", "schema": _INTENT_SCHEMA}},
@@ -110,7 +110,7 @@ DRY_RUN_NOTE = (
 
 DRY_RUN_DM = [
     {"intent_level": "high", "need_human": True,
-     "reply": "您好~下周末确实还有面向雪山的房型在售 🏔️ 方便留个微信或预订日期吗?我让管家给您同步实时房态和报价。"},
+     "reply": "您好~下周末确实还有面向雪山的房型在售 🏔️ 您计划哪天入住、几位呢?把日期和人数发在私信里,我让管家马上给您同步实时房态和报价～"},
     {"intent_level": "medium", "need_human": False,
      "reply": "我们家落地窗正对日照金山,公区壁炉也很出片 📷 想看更多实拍可以私信我发您~"},
     {"intent_level": "low", "need_human": False,
